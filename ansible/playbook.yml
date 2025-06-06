@@ -1,0 +1,52 @@
+- hosts: minecraft
+  become: yes
+  tasks:
+    - name: Update System
+      shell: yum update -y
+
+    - name: Install Java
+      shell: yum install -y java-21-amazon-corretto-headless
+
+    - name: Create Minecraft Directory
+      file:
+        path: /home/ec2-user/minecraft
+        state: directory
+        owner: ec2-user
+        group: ec2-user
+
+    - name: Create Server Directory
+      file:
+        path: /home/ec2-user/minecraft/server
+        state: directory
+        owner: ec2-user
+        group: ec2-user
+
+    - name: Download Server server.jar
+      get_url:
+        url: https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar
+        dest: /home/ec2-user/minecraft/server/server.jar
+
+    - name: Set up Systemd      
+      copy:
+        content: | 
+          [Unit]
+          Descriptiont=Minecraft Server
+          Wants=network-online.target
+          [Service]
+          User=ec2-user
+          WorkingDirectory=/home/ec2-user/minecraft/server
+          ExecStart=/usr/bin/java -Xmx1300M -Xms1300M -jar server.jar nogui
+          Restart=on-failure
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/minecraft.service
+    - name: Sign EULA
+      copy:
+        content: "eula=true\n"
+        dest: /home/ec2-user/minecraft/server/eula.txt
+    - name: Restart Minecraft Service
+      systemd:
+          daemon_reload: yes
+          name: minecraft
+          enabled: yes
+          state: started
