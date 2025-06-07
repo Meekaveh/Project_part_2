@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -f "/root/Project_part_2/my_key" ]; then
-	ssh-keygen -t rsa -b 4096 -f "my_key"
+	ssh-keygen -t rsa -b 4096 -f "my_key" -N ""
 fi
 
 cd terraform
