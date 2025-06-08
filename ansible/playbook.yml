@@ -1,6 +1,8 @@
 - hosts: minecraft
   become: yes
   tasks:
+    #I mainly just followed this guide
+    #https://aws.amazon.com/blogs/gametech/setting-up-a-minecraft-java-server-on-amazon-ec2/
     - name: Update System
       shell: yum update -y
 
@@ -26,6 +28,7 @@
         url: https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar
         dest: /home/ec2-user/minecraft/server/server.jar
 
+      #https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
     - name: Set up Systemd      
       copy:
         content: | 
@@ -40,10 +43,13 @@
           [Install]
           WantedBy=multi-user.target
         dest: /etc/systemd/system/minecraft.service
+
     - name: Sign EULA
       copy:
         content: "eula=true\n"
         dest: /home/ec2-user/minecraft/server/eula.txt
+
+      #https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_service_module.html          
     - name: Restart Minecraft Service
       systemd:
           daemon_reload: yes
