@@ -20,5 +20,5 @@ run:
     ./server_setup.sh
 
 ## What's Happening?
-
+![Diagram](https://github.com/user-attachments/assets/b31bfc2d-34e0-4b89-a7db-14132693c40b)
 
