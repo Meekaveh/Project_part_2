@@ -22,8 +22,8 @@ run:
 ## What's Happening?
 ![Diagram](https://github.com/user-attachments/assets/b31bfc2d-34e0-4b89-a7db-14132693c40b)
 
-1. setup_server.sh creates an ssh key if not already made
+1. server_setup.sh creates an ssh key if not already made
 2. main.tf uses the key to provision infra and output the public ip
-3. setup_server.sh uses the public ip to create an inventory file
+3. server_setup.sh uses the public ip to create an inventory file
 4. playbook.yml uses the inventory file to make the aws ec2 instance a host
 5. playbook.yml installs and starts the minecraft server
