@@ -13,6 +13,7 @@ terraform apply -auto-approve
 #Use -raw to get just the ip
 #https://stackoverflow.com/questions/66935287/how-to-remove-terraform-double-quotes
 ip=$(terraform output -raw instance_public_ip)
+sleep 15
 
 #Create inventory for host, then use it with the playbook to install and run minecraft
 cd ../ansible
