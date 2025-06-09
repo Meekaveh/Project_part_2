@@ -19,6 +19,8 @@ run:
 
     ./server_setup.sh
 
+When the ansible playbook is running, it'll likely ask for you to approve the new fingerprint, type "yes" and hit enter
+
 ## What's Happening?
 ![Diagram](https://github.com/user-attachments/assets/b31bfc2d-34e0-4b89-a7db-14132693c40b)
 
